@@ -1,11 +1,16 @@
 import React from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import {View, Text, StyleSheet, ViewStyle} from 'react-native';
 import {Card} from 'react-native-paper';
+import {StyleProp} from 'react-native';
 
-const QuestionCard = (props: {title: string; subtitle?: string}) => {
+const QuestionCard = (props: {
+  style: StyleProp<ViewStyle>;
+  title: string;
+  subtitle?: string;
+}) => {
   return (
     <>
-      <Card>
+      <Card style={props.style}>
         <Card.Title title={props.title} subtitle={props.subtitle} />
       </Card>
     </>

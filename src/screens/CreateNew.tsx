@@ -1,49 +1,90 @@
-import React from 'react';
-import {Button, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import React, {useState} from 'react';
+import {
+  Button,
+  StyleProp,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+  ViewStyle,
+} from 'react-native';
 import {useNavigate} from 'react-router-native';
+import styling from '../styling';
 
-const About = () => {
+const NewQuestionScreen = (props: {input: StyleProp<ViewStyle>}) => {
   let navigate = useNavigate();
+  const [text, onChangeText] = useState('What is your Question??');
+  const [reasonText, onChangeReasonText] = useState(
+    'Whats the purpose behind this question??',
+  );
 
   const styles = StyleSheet.create({
     container: {
-      flex: 1,
+      height: '100%',
       flexDirection: 'column',
-      justifyContent: 'center',
-      paddingHorizontal: 10,
+      backgroundColor: styling.primary,
     },
 
-    theRest: {
-      flex: 30,
-      // backgroundColor: 'yellow',
+    titleQuestion: {
+      alignSelf: 'center',
+      width: '90%',
+      margin: 10,
+      borderRadius: 40,
+      backgroundColor: styling.darkSecondary,
+      fontSize: 15,
     },
 
-    createNewButton: {
-      padding: 10,
-      flex: 1,
-      // backgroundColor: '#702632',
-      width: 100,
-      borderRadius: 30,
-    },
-
-    textStuff: {
-      position: 'absolute',
-      top: 100,
-      color: '#912F40',
-      textAlign: 'center',
+    topBar: {
+      flexDirection: 'row',
+      justifyContent: 'space-around',
     },
   });
 
   return (
-    <View>
-      <Text>About Screen</Text>
-      <TouchableOpacity
-        onPress={() => {
-          navigate('/');
-        }}>
-        <Text style={styles.textStuff}>Done</Text>
-      </TouchableOpacity>
+    <View style={styles.container}>
+      <View style={styles.topBar}>
+        <Text
+          onPress={() => {
+            navigate('/');
+          }}>
+          Cancel
+        </Text>
+        <Text>Save</Text>
+      </View>
+      <TextInput
+        numberOfLines={2}
+        multiline={true}
+        selectTextOnFocus={true}
+        onSelectionChange={({
+          nativeEvent: {
+            selection: {start, end},
+          },
+        }) => {
+          onChangeText('');
+          console.log('hamburger');
+        }}
+        style={[styles.titleQuestion, props.input]}
+        value={text}
+        onChangeText={onChangeText}
+      />
+      <TextInput
+        numberOfLines={2}
+        multiline={true}
+        selectTextOnFocus={true}
+        onSelectionChange={({
+          nativeEvent: {
+            selection: {start, end},
+          },
+        }) => {
+          onChangeText('');
+          console.log('hamburger');
+        }}
+        style={[styles.titleQuestion, props.input]}
+        value={reasonText}
+        onChangeText={onChangeReasonText}
+      />
     </View>
   );
 };
-export default About;
+export default NewQuestionScreen;
