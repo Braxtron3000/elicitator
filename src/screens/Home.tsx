@@ -89,7 +89,7 @@ export default function HomeScreen() {
                 subtitle: 'three years is a long time',
               },
             ]); */
-            navigate('about');
+            navigate('/about');
           }}
           label={'create new'}
           icon={''}

@@ -12,7 +12,7 @@ import {
 import {useNavigate} from 'react-router-native';
 import styling from '../styling';
 
-const NewQuestionScreen = (props: {input: StyleProp<ViewStyle>}) => {
+const NewQuestionScreen = (props: {inputStyle?: StyleProp<ViewStyle>}) => {
   let navigate = useNavigate();
   const [text, onChangeText] = useState('What is your Question??');
   const [reasonText, onChangeReasonText] = useState(
@@ -64,7 +64,7 @@ const NewQuestionScreen = (props: {input: StyleProp<ViewStyle>}) => {
           onChangeText('');
           console.log('hamburger');
         }}
-        style={[styles.titleQuestion, props.input]}
+        style={[styles.titleQuestion, props.inputStyle]}
         value={text}
         onChangeText={onChangeText}
       />
@@ -80,7 +80,7 @@ const NewQuestionScreen = (props: {input: StyleProp<ViewStyle>}) => {
           onChangeText('');
           console.log('hamburger');
         }}
-        style={[styles.titleQuestion, props.input]}
+        style={[styles.titleQuestion, props.inputStyle]}
         value={reasonText}
         onChangeText={onChangeReasonText}
       />
