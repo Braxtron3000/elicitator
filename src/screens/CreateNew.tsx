@@ -8,22 +8,23 @@ import {
   TouchableOpacity,
   View,
   ViewStyle,
+  FlatList,
 } from 'react-native';
 import {useNavigate} from 'react-router-native';
 import styling from '../styling';
 
 const NewQuestionScreen = (props: {inputStyle?: StyleProp<ViewStyle>}) => {
   let navigate = useNavigate();
-  const [text, onChangeText] = useState('What is your Question??');
-  const [reasonText, onChangeReasonText] = useState(
-    'Whats the purpose behind this question??',
-  );
+  const [subQuestions, setSubQuestions] = useState<string[]>([]);
+  const [subQuestionTextValue, setSubQuestionTextValue] = useState<string>();
+  const [titleQuestion, setTitleQuestion] = useState<string>();
+  const [importanceQuestion, setImportanceQuestion] = useState<string>();
 
   const styles = StyleSheet.create({
     container: {
       height: '100%',
       flexDirection: 'column',
-      backgroundColor: styling.primary,
+      backgroundColor: styling.darkPrime,
     },
 
     titleQuestion: {
@@ -39,50 +40,89 @@ const NewQuestionScreen = (props: {inputStyle?: StyleProp<ViewStyle>}) => {
       flexDirection: 'row',
       justifyContent: 'space-around',
     },
+    topBarButtons: {
+      color: styling.accent,
+      fontWeight: 'bold',
+    },
+    addSubQuestionButton: {
+      color: styling.accent,
+      alignSelf: 'center',
+      fontWeight: 'bold',
+    },
   });
+
+  const EditText = (props: {
+    placeholder: string;
+    textValue: string;
+    onTextChange: any;
+  }) => {
+    const styles = StyleSheet.create({
+      container: {
+        margin: 10,
+      },
+      title: {
+        marginLeft: 20,
+        color: styling.white,
+      },
+      inputStyle: {
+        borderRadius: 20,
+        backgroundColor: styling.white,
+      },
+    });
+
+    return (
+      <View style={styles.container}>
+        <Text style={styles.title}>{props.placeholder}</Text>
+        <TextInput
+          value={props.textValue}
+          onChangeText={text => props.onTextChange(text)}
+          style={styles.inputStyle}
+        />
+      </View>
+    );
+  };
 
   return (
     <View style={styles.container}>
       <View style={styles.topBar}>
         <Text
+          style={styles.topBarButtons}
           onPress={() => {
             navigate('/');
           }}>
           Cancel
         </Text>
-        <Text>Save</Text>
+        <Text style={styles.topBarButtons}>Save</Text>
       </View>
-      <TextInput
-        numberOfLines={2}
-        multiline={true}
-        selectTextOnFocus={true}
-        onSelectionChange={({
-          nativeEvent: {
-            selection: {start, end},
-          },
-        }) => {
-          onChangeText('');
-          console.log('hamburger');
-        }}
-        style={[styles.titleQuestion, props.inputStyle]}
-        value={text}
-        onChangeText={onChangeText}
+
+      <EditText
+        textValue={titleQuestion}
+        onTextChange={setTitleQuestion}
+        placeholder={'Title Question '}
       />
-      <TextInput
-        numberOfLines={2}
-        multiline={true}
-        selectTextOnFocus={true}
-        onSelectionChange={({
-          nativeEvent: {
-            selection: {start, end},
-          },
-        }) => {
-          onChangeText('');
-          console.log('hamburger');
+      <EditText
+        textValue={importanceQuestion}
+        onTextChange={setImportanceQuestion}
+        placeholder={'Its Importance?'}
+      />
+      <EditText
+        textValue={subQuestionTextValue}
+        onTextChange={setSubQuestionTextValue}
+        placeholder={'Add Sub Question'}
+      />
+      <Text
+        onPress={() => {
+          setSubQuestions([...subQuestions, subQuestionTextValue]);
+          setSubQuestionTextValue('');
         }}
-        style={[styles.titleQuestion, props.inputStyle]}
-        value={reasonText}
-        onChangeText={onChangeReasonText}
+        style={styles.addSubQuestionButton}>
+        Add Sub Question
+      </Text>
+      <FlatList
+        data={subQuestions}
+        renderItem={({item}) => {
+          return <Text>* {item}</Text>;
+        }}
       />
     </View>
   );
