@@ -16,9 +16,9 @@ import styling from '../styling';
 const NewQuestionScreen = (props: {inputStyle?: StyleProp<ViewStyle>}) => {
   let navigate = useNavigate();
   const [subQuestions, setSubQuestions] = useState<string[]>([]);
-  const [subQuestionTextValue, setSubQuestionTextValue] = useState<string>();
-  const [titleQuestion, setTitleQuestion] = useState<string>();
-  const [importanceQuestion, setImportanceQuestion] = useState<string>();
+  const [subQuestionTextValue, setSubQuestionTextValue] = useState<string>('');
+  const [titleQuestion, setTitleQuestion] = useState<string>('');
+  const [importanceQuestion, setImportanceQuestion] = useState<string>('');
 
   const styles = StyleSheet.create({
     container: {
@@ -49,6 +49,17 @@ const NewQuestionScreen = (props: {inputStyle?: StyleProp<ViewStyle>}) => {
       alignSelf: 'center',
       fontWeight: 'bold',
     },
+    container2: {
+      margin: 10,
+    },
+    title: {
+      marginLeft: 20,
+      color: styling.white,
+    },
+    inputStyle: {
+      borderRadius: 20,
+      backgroundColor: styling.white,
+    },
   });
 
   const EditText = (props: {
@@ -74,8 +85,8 @@ const NewQuestionScreen = (props: {inputStyle?: StyleProp<ViewStyle>}) => {
       <View style={styles.container}>
         <Text style={styles.title}>{props.placeholder}</Text>
         <TextInput
-          value={props.textValue}
-          onChangeText={text => props.onTextChange(text)}
+          // value={''}
+          onChangeText={props.onTextChange}
           style={styles.inputStyle}
         />
       </View>
@@ -95,21 +106,27 @@ const NewQuestionScreen = (props: {inputStyle?: StyleProp<ViewStyle>}) => {
         <Text style={styles.topBarButtons}>Save</Text>
       </View>
 
-      <EditText
-        textValue={titleQuestion}
-        onTextChange={setTitleQuestion}
-        placeholder={'Title Question '}
-      />
-      <EditText
-        textValue={importanceQuestion}
-        onTextChange={setImportanceQuestion}
-        placeholder={'Its Importance?'}
-      />
-      <EditText
-        textValue={subQuestionTextValue}
-        onTextChange={setSubQuestionTextValue}
-        placeholder={'Add Sub Question'}
-      />
+      <View style={styles.container2}>
+        <Text style={styles.title}>Title Question 2</Text>
+        <TextInput
+          onChangeText={text => setTitleQuestion(text)}
+          style={styles.inputStyle}
+        />
+      </View>
+      <View style={styles.container2}>
+        <Text style={styles.title}>Title Question 2</Text>
+        <TextInput
+          onChangeText={text => setTitleQuestion(text)}
+          style={styles.inputStyle}
+        />
+      </View>
+      <View style={styles.container2}>
+        <Text style={styles.title}>Title Question 2</Text>
+        <TextInput
+          onChangeText={text => setTitleQuestion(text)}
+          style={styles.inputStyle}
+        />
+      </View>
       <Text
         onPress={() => {
           setSubQuestions([...subQuestions, subQuestionTextValue]);
