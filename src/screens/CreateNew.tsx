@@ -12,9 +12,14 @@ import {
 } from 'react-native';
 import {useNavigate} from 'react-router-native';
 import styling from '../styling';
+import {useSelector, useDispatch} from 'react-redux';
+import {addQuestion} from '../state/questionsListSlice';
 
 const NewQuestionScreen = (props: {inputStyle?: StyleProp<ViewStyle>}) => {
   let navigate = useNavigate();
+  const questionList = useSelector((state: any) => state.questions.value);
+  const dispatch = useDispatch();
+
   const [subQuestions, setSubQuestions] = useState<string[]>([]);
   const [subQuestionTextValue, setSubQuestionTextValue] = useState<string>('');
   const [titleQuestion, setTitleQuestion] = useState<string>('');
@@ -74,7 +79,17 @@ const NewQuestionScreen = (props: {inputStyle?: StyleProp<ViewStyle>}) => {
         </Text>
         <Text
           onPress={() => {
-            navigate('/');
+            dispatch(
+              addQuestion({
+                titleQuestion: titleQuestion,
+                importanceQuestion: importanceQuestion,
+                subQuestions: subQuestions,
+              }),
+            );
+            console.log(
+              'aye i just updated the question ' + JSON.stringify(questionList),
+            );
+            // navigate('/');
           }}
           style={styles.topBarButtons}>
           Save
@@ -84,12 +99,13 @@ const NewQuestionScreen = (props: {inputStyle?: StyleProp<ViewStyle>}) => {
       <View style={styles.container2}>
         <Text style={styles.title}>Title Question</Text>
         <TextInput
-          onChangeText={text => setTitleQuestion(text)}
+          onChangeText={setTitleQuestion}
           style={styles.inputStyle}
+          value={titleQuestion}
         />
       </View>
       <View style={styles.container2}>
-        <Text style={styles.title}>Its Importance</Text>
+        <Text style={styles.title}>the benefit from knowing this answer</Text>
         <TextInput
           onChangeText={text => setImportanceQuestion(text)}
           style={styles.inputStyle}

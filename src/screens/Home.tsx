@@ -12,6 +12,7 @@ import QuestionCard from '../components/card';
 import {FAB} from 'react-native-paper';
 import {Item} from 'react-native-paper/lib/typescript/components/List/List';
 import styling from '../styling';
+import {useSelector} from 'react-redux';
 
 const styles = StyleSheet.create({
   container: {
@@ -51,6 +52,8 @@ const styles = StyleSheet.create({
 
 export default function HomeScreen() {
   let navigate = useNavigate();
+  const questionList = useSelector((state: any) => state.questions.value);
+
   const [list, setList] = useState<
     {
       time: string;
@@ -64,14 +67,14 @@ export default function HomeScreen() {
       <View style={styles.theRest}>
         <FlatList
           keyExtractor={item => item.time}
-          data={list}
+          data={questionList}
           extraData={list}
           renderItem={({item}) => {
             return (
               <QuestionCard
                 style={{margin: 10, padding: 2, height: 200}}
-                title={item.title}
-                subtitle={item.subtitle}
+                title={item.titleQuestion}
+                subtitle={item.importanceQuestion}
               />
             );
           }}
@@ -81,14 +84,6 @@ export default function HomeScreen() {
         <FAB
           style={styles.createNewButton}
           onPress={() => {
-            /*             setList([
-              ...list,
-              {
-                time: new Date().toISOString(),
-                title: 'in a year?',
-                subtitle: 'three years is a long time',
-              },
-            ]); */
             navigate('/about');
           }}
           label={'create new'}

@@ -1,4 +1,5 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
+import {RootState} from '../../store.js';
 import {Question} from '../../types.js';
 
 interface QuestionListState {
@@ -13,12 +14,12 @@ export const QuestionListSlice = createSlice({
   name: 'questionList',
   initialState,
   reducers: {
-    addQuestion: (state, action) => {
+    addQuestion: (state, action: PayloadAction<Question>) => {
       state.value = [...state.value, action.payload];
     },
   },
 });
 
 export const {addQuestion} = QuestionListSlice.actions;
-
+export const selectQuestionList = (state: RootState) => state.questions.value;
 export default QuestionListSlice.reducer;
