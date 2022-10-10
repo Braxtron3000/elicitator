@@ -64,3 +64,4 @@ buck-out/
 
 # bunch of stupid bs or something idk.
 package.json
+firebase.ts
