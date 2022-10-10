@@ -89,7 +89,7 @@ const NewQuestionScreen = (props: {inputStyle?: StyleProp<ViewStyle>}) => {
             console.log(
               'aye i just updated the question ' + JSON.stringify(questionList),
             );
-            // navigate('/');
+            navigate('/');
           }}
           style={styles.topBarButtons}>
           Save

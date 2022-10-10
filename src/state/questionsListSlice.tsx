@@ -17,9 +17,12 @@ export const QuestionListSlice = createSlice({
     addQuestion: (state, action: PayloadAction<Question>) => {
       state.value = [...state.value, action.payload];
     },
+    deleteAllQuestions: state => {
+      state.value = [];
+    },
   },
 });
 
-export const {addQuestion} = QuestionListSlice.actions;
+export const {addQuestion, deleteAllQuestions} = QuestionListSlice.actions;
 export const selectQuestionList = (state: RootState) => state.questions.value;
 export default QuestionListSlice.reducer;

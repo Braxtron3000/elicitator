@@ -12,7 +12,8 @@ import QuestionCard from '../components/card';
 import {FAB} from 'react-native-paper';
 import {Item} from 'react-native-paper/lib/typescript/components/List/List';
 import styling from '../styling';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
+import {deleteAllQuestions} from '../state/questionsListSlice';
 
 const styles = StyleSheet.create({
   container: {
@@ -53,6 +54,7 @@ const styles = StyleSheet.create({
 export default function HomeScreen() {
   let navigate = useNavigate();
   const questionList = useSelector((state: any) => state.questions.value);
+  const dispatch = useDispatch();
 
   const [list, setList] = useState<
     {
@@ -92,7 +94,7 @@ export default function HomeScreen() {
         <FAB
           style={styles.createNewButton}
           onPress={() => {
-            setList([]);
+            dispatch(deleteAllQuestions());
           }}
           label={'delete all'}
           icon={''}
